@@ -2,6 +2,7 @@ package net.dcarpioc.firebasedemoapp;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -30,6 +31,11 @@ public class FirebaseIDService extends FirebaseInstanceIdService {
      */
     private void sendRegistrationToServer(String token) {
         // Add custom implementation, as needed.
+
+        // Saving token in SharedPreferences
+        SharedPreferences.Editor editor = getSharedPreferences(MainActivity.MY_GLOBAL_PREFS, MODE_PRIVATE).edit();
+        editor.putString(MainActivity.REGISTRATION_ID, token);
+        editor.apply();
     }
 
 }

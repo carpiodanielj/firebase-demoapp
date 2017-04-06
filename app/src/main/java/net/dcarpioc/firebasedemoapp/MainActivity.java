@@ -1,5 +1,6 @@
 package net.dcarpioc.firebasedemoapp;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,8 +9,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String MY_GLOBAL_PREFS = "my_global_prefs";
+    public static String REGISTRATION_ID = "";
+
+    TextView tvToken;
+    EditText etToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +35,26 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        tvToken = (TextView) findViewById(R.id.tvToken);
+        etToken = (EditText) findViewById(R.id.etToken);
+
+        showToken();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        showToken();
+    }
+
+    private void showToken() {
+        // Retrieving the token from SharedPreferences
+        SharedPreferences preferences = getSharedPreferences(MY_GLOBAL_PREFS, MODE_PRIVATE);
+        String token = preferences.getString(REGISTRATION_ID, "");
+
+        etToken.setText(token);
     }
 
     @Override
